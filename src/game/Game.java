@@ -1,9 +1,11 @@
 package game;
 
 import javax.swing.JFrame;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Canvas;
+import java.awt.Dimension;
 
-public class Game extends Canvas
+public class Game extends Canvas implements Runnable
 {
 	private static final long serialVersionUID = 1L;
 	
@@ -18,6 +20,8 @@ public class Game extends Canvas
 
     private static JFrame window;
 
+    private static Thread thread;
+    
     private Game()
     {
         setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT));
@@ -35,5 +39,22 @@ public class Game extends Canvas
     
     public static void main(String []args) {
     	Game game = new Game();
+    	game.start();
     }
+    
+    private void start() 
+    {
+    	thread = new Thread(this, "Gráficos");
+    	thread.start(); 
+    }
+
+    private void stop() 
+    {
+    	
+    }
+    
+	@Override
+	public void run() {
+		System.out.println("ejecutando");
+	}
 }
