@@ -22,6 +22,8 @@ public class Game extends Canvas implements Runnable
 
     private static Thread thread;
     
+    private static volatile boolean running= false;
+    
     private Game()
     {
         setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT));
@@ -42,19 +44,30 @@ public class Game extends Canvas implements Runnable
     	game.start();
     }
     
-    private void start() 
+    private synchronized void start() 
     {
+    	running = true;
+    	
     	thread = new Thread(this, "Gráficos");
     	thread.start(); 
     }
 
-    private void stop() 
+    private synchronized void stop() 
     {
-    	
+    	running = false;
+    	try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
     }
     
 	@Override
 	public void run() {
-		System.out.println("ejecutando");
+		System.out.println("ejecutando...");
+		while(running) 
+		{
+			
+		}
 	}
 }
