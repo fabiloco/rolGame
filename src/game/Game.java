@@ -1,6 +1,9 @@
 package game;
 
 import javax.swing.JFrame;
+
+import control.Keyboard;
+
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -23,8 +26,8 @@ public class Game extends Canvas implements Runnable
     
 
     private static JFrame window;
-
     private static Thread thread;
+    private static Keyboard keyboard;
     
     private static volatile boolean running= false;
     
@@ -32,6 +35,9 @@ public class Game extends Canvas implements Runnable
     {
         setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT));
 
+        keyboard = new Keyboard();
+        addKeyListener(keyboard);
+        
         window = new JFrame(NAME);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
@@ -68,6 +74,25 @@ public class Game extends Canvas implements Runnable
     
     private void refresh() 
     {
+    	keyboard.refresh();
+    	
+    	if(keyboard.up) 
+    	{
+    		System.out.println("::UP::");
+    	}
+    	if(keyboard.down) 
+    	{
+    		System.out.println("::DOWN::");
+    	}
+    	if(keyboard.right) 
+    	{
+    		System.out.println("::RIGHT::");
+    	}
+    	if(keyboard.left) 
+    	{
+    		System.out.println("::LEFT::");
+    	}
+    	
     	aps++;
     }
     
@@ -92,7 +117,7 @@ public class Game extends Canvas implements Runnable
 		double tiempoTranscurrido;
 		double delta = 0;
 		
-		
+		requestFocus();
 		
 		while(running) 
 		{

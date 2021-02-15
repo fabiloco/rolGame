@@ -20,9 +20,9 @@ public final class Sprite
 		this.y = row * this.side;
 		this.sheet = sheet;
 		
-		for(int i = 0; i < side; i++) {
-			for(int j = 0; j < side; j++) {
-				pixels[(j + i) * side] = sheet.pixels[(x + this.x) + (y + this.y) * sheet.getHeight()]; 
+		for(int y = 0; y < side; y++) {
+			for(int x = 0; x < side; x++) {
+				pixels[(x + y) * side] = sheet.pixels[(x + this.x) + (y + this.y) * sheet.getHeight()]; 
 			}
 		}
 	}
