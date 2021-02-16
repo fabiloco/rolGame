@@ -37,7 +37,7 @@ public class Display
 				if(posicionX < 0 || posicionX >= width) {
 					continue;
 				}
-				//Código para redibujar la pantalla
+				//Código para redibujar la pantalla cap 12
 				
 			}
 		}
