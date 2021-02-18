@@ -6,6 +6,13 @@ public class Display
 	private final int height;
 	
 	public final int[] pixels;
+
+	//Inicio temporal
+	
+	private final static int SIDE_SPRITE = 32;
+	private final static int MASK_SPRITE = SIDE_SPRITE - 1;
+	
+	//Fin temporal
 	
 	public Display(final int width, final int height) {
 		this.width = width;
@@ -37,7 +44,9 @@ public class Display
 				if(posicionX < 0 || posicionX >= width) {
 					continue;
 				}
-				//Código para redibujar la pantalla cap 12
+				
+				//Temporal
+				pixels[posicionX + posicionY * width] = Sprite.grass.pixels[(x & MASK_SPRITE) + (y & MASK_SPRITE) * SIDE_SPRITE];
 				
 			}
 		}

@@ -3,10 +3,15 @@ package game;
 import javax.swing.JFrame;
 
 import control.Keyboard;
+import graphics.Display;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 
 public class Game extends Canvas implements Runnable
 {
@@ -16,8 +21,8 @@ public class Game extends Canvas implements Runnable
 	 * 
 	 */
 	
-	private static final int WIDTH = 800;
-    private static final int HEIGHT = 600;
+	private static final int WIDTH = 1024;
+    private static final int HEIGHT = 768;
 
     private static final String NAME = "Juego";
     
@@ -25,9 +30,17 @@ public class Game extends Canvas implements Runnable
     private static int fps = 0;
     
 
+    private static int x = 0;
+    private static int y = 0;
+    
+    
     private static JFrame window;
     private static Thread thread;
     private static Keyboard keyboard;
+    private static Display display;
+    
+    private static BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+    private static int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData(); 
     
     private static volatile boolean running= false;
     
@@ -35,6 +48,8 @@ public class Game extends Canvas implements Runnable
     {
         setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT));
 
+        display = new Display(WIDTH, HEIGHT);
+        
         keyboard = new Keyboard();
         addKeyListener(keyboard);
         
@@ -58,7 +73,7 @@ public class Game extends Canvas implements Runnable
     {
     	running = true;
     	
-    	thread = new Thread(this, "Gráficos");
+    	thread = new Thread(this, "graficos");
     	thread.start(); 
     }
 
@@ -78,25 +93,54 @@ public class Game extends Canvas implements Runnable
     	
     	if(keyboard.up) 
     	{
-    		System.out.println("::UP::");
+    		//System.out.println("::UP::");
+    		y++;
     	}
     	if(keyboard.down) 
     	{
-    		System.out.println("::DOWN::");
+    		//System.out.println("::DOWN::");
+    		y--;
     	}
     	if(keyboard.right) 
     	{
-    		System.out.println("::RIGHT::");
+    		//System.out.println("::RIGHT::");
+    		x--;
     	}
     	if(keyboard.left) 
     	{
-    		System.out.println("::LEFT::");
+    		//System.out.println("::LEFT::");
+    		x++;
     	}
     	
     	aps++;
     }
     
-    private void showGraphics() {
+    private void showGraphics() 
+    {
+    	BufferStrategy estrategia = getBufferStrategy();
+    	
+    	if(estrategia == null) {
+    		createBufferStrategy(3);
+    		return;
+    	}
+    	
+    	display.clean();
+    	display.show(x, y);
+    	
+    	System.arraycopy(display.pixels, 0, this.pixels, 0, this.pixels.length);
+    	
+    	//Manera tosca de hacerlo
+    	//for(int i = 0; i < pixels.length; i++) {
+    	//	pixels[i] = display.pixels[i];
+    	//}
+    		
+    	Graphics g = estrategia.getDrawGraphics();
+    	
+    	g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), null);
+    	g.dispose();
+    	
+    	estrategia.show();
+    	
     	fps++;
     }
     

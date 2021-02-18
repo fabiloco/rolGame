@@ -9,12 +9,18 @@ public final class Sprite
 	
 	public int[] pixels;
 	private SpriteSheet sheet;
+
+	//Incio colección de sprites
+	
+	public static Sprite grass = new Sprite(32, 0, 0, SpriteSheet.sheet1);
+	
+	//Fin colección de sprites
 	
 	public Sprite(final int side, final int column, final int row, final SpriteSheet sheet)
 	{
 		this.side=side;
 		
-		pixels = new int[this.side * this.side];
+		pixels = new int[side * side];
 		
 		this.x = column * this.side;
 		this.y = row * this.side;
@@ -22,7 +28,7 @@ public final class Sprite
 		
 		for(int y = 0; y < side; y++) {
 			for(int x = 0; x < side; x++) {
-				pixels[(x + y) * side] = sheet.pixels[(x + this.x) + (y + this.y) * sheet.getHeight()]; 
+				pixels[x + y * side] = sheet.pixels[(x + this.x) + (y + this.y) * sheet.getHeight()]; 
 			}
 		}
 	}

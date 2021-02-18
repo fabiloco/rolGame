@@ -15,6 +15,13 @@ public class SpriteSheet
 	private final int height;
 	
 	
+	//Colección de hojas de sprites
+	
+	public static SpriteSheet sheet1 = new SpriteSheet("/textures/spritesheet1.png", 320, 320); 
+	
+	//fin colección hojas de sprites
+	
+	
 	public SpriteSheet(final String path, final int width, final int height) {
 		this.width = width;
 		this.height = height;
