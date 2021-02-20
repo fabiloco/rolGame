@@ -1,5 +1,6 @@
 package game;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import control.Keyboard;
@@ -21,8 +22,8 @@ public class Game extends Canvas implements Runnable
 	 * 
 	 */
 	
-	private static final int WIDTH = 1024;
-    private static final int HEIGHT = 768;
+	private static final int WIDTH = 800;
+    private static final int HEIGHT = 600;
 
     private static final String NAME = "Juego";
     
@@ -41,6 +42,8 @@ public class Game extends Canvas implements Runnable
     
     private static BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     private static int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData(); 
+
+    private static final ImageIcon icon = new ImageIcon(Game.class.getResource("/icon/icon.png"));
     
     private static volatile boolean running= false;
     
@@ -60,6 +63,8 @@ public class Game extends Canvas implements Runnable
         window.add(this, BorderLayout.CENTER);
         window.pack();
         window.setLocationRelativeTo(null);
+        
+        window.setIconImage(icon.getImage());
         
         window.setVisible(true);
     }
